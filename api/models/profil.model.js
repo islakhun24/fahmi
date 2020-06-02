@@ -1,12 +1,12 @@
 const sql = require("./db.js");
 
 // constructor
-const profil = function(Profil) {
-  this.id_user = Profil.id_user;
-  this.image = Profil.image;
-  this.tanggal_post = Profil.tanggal_post;
-  this.caption = Profil.caption;
-  this.alamat = Profil.alamat;
+const Profil = function(profil) {
+  this.id_user = profil.id_user;
+  this.image = profil.image;
+  this.tanggal_post = profil.tanggal_post;
+  this.caption = profil.caption;
+  this.alamat = profil.alamat;
 };
 
 Profil.simpan = (profil, result) => {

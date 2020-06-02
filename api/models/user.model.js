@@ -60,7 +60,7 @@ User.login = (newUser, result) => {
     });
   };
   
-  user.semua = result => {
+  User.semua = result => {
     sql.query("SELECT * FROM tb_user", (err, res) => {
       if (err) {
         console.log("error: ", err);

@@ -42,7 +42,7 @@ Kas.findById = (kasId, result) => {
   });
 };
 
-kas.semua = result => {
+Kas.semua = result => {
   sql.query("SELECT * FROM tb_kas", (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -55,7 +55,7 @@ kas.semua = result => {
   });
 };
 
-kas.updateById = (id, kas, result) => {
+Kas.updateById = (id, kas, result) => {
   sql.query(
     "UPDATE tb_kas SET alamat = ?, jenis_kas = ?, tanggal_kas = ?, nominal = ?, deskripsi = ? WHERE id = ?",
     [kas.alamat, kas.jenis_kas, kas.tanggal_kas,kas.nominal, kas.deskripsi,id],
@@ -97,7 +97,7 @@ Kas.hapus = (id, result) => {
   });
 };
 
-kas.hapusSemua = result => {
+Kas.hapusSemua = result => {
   sql.query("DELETE FROM tb_kas", (err, res) => {
     if (err) {
       console.log("error: ", err);
