@@ -1,9 +1,25 @@
+var multer  = require('multer')
 module.exports = app => {
     const user = require("../controllers/user.controller.js");
     const kas = require("../controllers/kas.controller.js");
     const news = require("../controllers/news.controller.js");
     const profil = require("../controllers/profil.controller.js");
 
+
+    var storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, './api/uploads')
+      },
+      filename: function (req, file, cb) {
+        cb(null, file.originalname + '-' + Date.now())
+      }
+    })
+    const upload = multer({
+      storage: storage,
+      limits : {fileSize : 2000000}
+    });
+
+    
     // API USER
     app.post("/login", user.login);
     app.post("/daftar", user.daftar);
@@ -22,7 +38,7 @@ module.exports = app => {
     app.get("/kas/hapusAll", kas.hapusSemua);
 
     //API NEWS
-    app.post("/news", news.simpan);
+    app.post("/news", upload.single('file'), news.simpan);
     app.get("/news", news.semua);
     app.get("/news/:id_news", news.detail);
     app.post("/news/ubah/:id_news", news.ubah);
@@ -30,7 +46,7 @@ module.exports = app => {
     app.get("/news/hapusAll", news.hapusSemua);
 
     //API USER PROFIl
-    app.post("/profil", profil.simpan);
+    app.post("/profil",upload.single('file'), profil.simpan);
     app.get("/profil", profil.semua);
     app.get("/profil/:id_profil", profil.detail);
     app.post("/news/ubah/:id_profil", profil.ubah);

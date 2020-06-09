@@ -8,11 +8,11 @@ exports.simpan = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-
+  var finalImg = req.file.filename 
   // Create a Profil
   const profil = new Profil({
     email : req.body.email,
-    foto_profil : req.body.foto_profil,
+    foto_profil : finalImg,
     no_kk : req.body.no_kk,
     nik : req.body.nik,
     nama : req.body.nama,
@@ -71,11 +71,23 @@ exports.ubah = (req, res) => {
     });
   }
 
-  console.log(req.body);
+  var finalImg = req.file.filename 
+  // Create a Profil
+  const profil = new Profil({
+    email : req.body.email,
+    foto_profil : finalImg,
+    no_kk : req.body.no_kk,
+    nik : req.body.nik,
+    nama : req.body.nama,
+    jenis_kelamin : req.body.jenis_kelamin,
+    tempat_lahir : req.body.tempat_lahir,
+    tanggal_lahir : req.body.tanggal_lahir,
+    alamat : req.body.alamat,
+    id_user: req.body.id_user});
 
   Profil.updateById(
     req.params.id_profil,
-    new Profil(req.body),
+    new Profil(profil),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {

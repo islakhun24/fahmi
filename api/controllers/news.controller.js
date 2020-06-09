@@ -1,18 +1,26 @@
 const News = require("../models/news.model.js");
-
+var fs  = require('fs')
 // Create and Save a new news
 exports.simpan = (req, res) => {
+
+  var img = fs.readFileSync(req.file.path);
+  var encode_image = img.toString('base64');
+  // Define a JSONobject for the image attributes for saving to database
+   
+  
+
+
   // Validate request
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
   }
-
+  var finalImg = req.file.filename 
   // Create a news
   const news = new News({
     id_user : req.body.id_user,
-    image : req.body.image,
+    image : finalImg,
     tanggal_post : req.body.tanggal_post,
     caption : req.body.caption,
     alamat : req.body.alamat
@@ -66,12 +74,19 @@ exports.ubah = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-
-  console.log(req.body);
+  var finalImg = req.file.filename 
+  // Create a news
+  const news = new News({
+    image : finalImg,
+    tanggal_post : req.body.tanggal_post,
+    caption : req.body.caption,
+    alamat : req.body.alamat
+  });
+  
 
   News.updateById(
     req.params.id_news,
-    new News(req.body),
+    new News(news),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
